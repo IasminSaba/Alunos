@@ -19,6 +19,10 @@ public class AlunoDTO {
         this.serie = aluno.getSerie();
     }
 
+    public AlunoDTO(){
+
+    }
+
     public Long getId() {
         return id;
     }

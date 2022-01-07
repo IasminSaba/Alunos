@@ -24,13 +24,23 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    @Autowired
-    private  AlunoRepository alunoRepository;
-
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> getAll(){
         List<Aluno> alunos = alunoService.getAll();
         return new ResponseEntity<List<AlunoDTO>>(AlunoDTO.toConvert(alunos), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AlunoDTO> getById(@PathVariable Long id){
+        Optional<Aluno> optional = alunoService.findById(id);
+        if (optional.isPresent()) {
+            Aluno aluno = alunoService.getById(id);
+
+            AlunoDTO alunoDTO = AlunoMapper.INSTANCE.alunoToAlunoDTO(aluno);
+            return ResponseEntity.ok(alunoDTO);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -48,7 +58,7 @@ public class AlunoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<AlunoDTO> update(@PathVariable Long id, @RequestBody AlunoForm form) {
-        Optional<Aluno> optional = alunoRepository.findById(id);
+        Optional<Aluno> optional = alunoService.findById(id);
         if (optional.isPresent()) {
             Aluno aluno = alunoService.update(id, form.getNome(), form.getIdade(), form.getSerie());
 
@@ -62,7 +72,7 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<Aluno> optional = alunoRepository.findById(id);
+        Optional<Aluno> optional = alunoService.findById(id);
         if (optional.isPresent()) {
             alunoService.delete(id);
             return ResponseEntity.ok().build();
