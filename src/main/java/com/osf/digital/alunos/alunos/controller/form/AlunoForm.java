@@ -1,8 +1,5 @@
 package com.osf.digital.alunos.alunos.controller.form;
 
-import com.osf.digital.alunos.alunos.model.Aluno;
-import com.osf.digital.alunos.alunos.repository.AlunoRepository;
-
 public class AlunoForm {
 
     private String nome;
@@ -31,19 +28,5 @@ public class AlunoForm {
 
     public void setSerie(String serie) {
         this.serie = serie;
-    }
-
-    public Aluno toConvert(AlunoRepository brandRepository) {
-        return new Aluno(nome, idade, serie);
-    }
-
-    public Aluno update(Long id, AlunoRepository alunoRepository){
-        Aluno aluno = alunoRepository.getById(id);
-
-        aluno.setNome(nome);
-        aluno.setIdade(idade);
-        aluno.setSerie(serie);
-
-        return aluno;
     }
 }

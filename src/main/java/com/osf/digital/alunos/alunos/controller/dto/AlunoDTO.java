@@ -46,8 +46,4 @@ public class AlunoDTO {
     public void setSerie(String serie) {
         this.serie = serie;
     }
-
-    public static List<AlunoDTO> toConvert(List<Aluno> alunos){
-        return alunos.stream().map(AlunoDTO::new).collect(Collectors.toList());
-    }
 }

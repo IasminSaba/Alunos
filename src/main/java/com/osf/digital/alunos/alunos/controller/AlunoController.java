@@ -4,7 +4,6 @@ import com.osf.digital.alunos.alunos.controller.dto.AlunoDTO;
 import com.osf.digital.alunos.alunos.controller.form.AlunoForm;
 import com.osf.digital.alunos.alunos.mapper.AlunoMapper;
 import com.osf.digital.alunos.alunos.model.Aluno;
-import com.osf.digital.alunos.alunos.repository.AlunoRepository;
 import com.osf.digital.alunos.alunos.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,8 @@ public class AlunoController {
     @GetMapping
     public ResponseEntity<List<AlunoDTO>> getAll(){
         List<Aluno> alunos = alunoService.getAll();
-        return new ResponseEntity<List<AlunoDTO>>(AlunoDTO.toConvert(alunos), HttpStatus.OK);
+
+        return new ResponseEntity<List<AlunoDTO>>(AlunoMapper.INSTANCE.map(alunos), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

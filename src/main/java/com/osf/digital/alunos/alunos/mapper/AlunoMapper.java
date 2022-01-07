@@ -1,10 +1,11 @@
 package com.osf.digital.alunos.alunos.mapper;
 
 import com.osf.digital.alunos.alunos.controller.dto.AlunoDTO;
-import com.osf.digital.alunos.alunos.controller.form.AlunoForm;
 import com.osf.digital.alunos.alunos.model.Aluno;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface AlunoMapper {
@@ -13,5 +14,5 @@ public interface AlunoMapper {
 
     AlunoDTO alunoToAlunoDTO (Aluno aluno);
 
-    AlunoForm alunoFormToAluno (AlunoForm alunoForm);
+    List<AlunoDTO> map(List<Aluno> alunos);
 }
