@@ -2,6 +2,7 @@ package com.osf.digital.alunos.alunos.controller;
 
 import com.osf.digital.alunos.alunos.controller.dto.AlunoDTO;
 import com.osf.digital.alunos.alunos.controller.form.AlunoForm;
+import com.osf.digital.alunos.alunos.mapper.AlunoMapper;
 import com.osf.digital.alunos.alunos.model.Aluno;
 import com.osf.digital.alunos.alunos.repository.AlunoRepository;
 import com.osf.digital.alunos.alunos.service.AlunoService;
@@ -38,7 +39,9 @@ public class AlunoController {
         Aluno aluno = alunoService.create(form.getNome(), form.getIdade(), form.getSerie());
 
         URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
-        return ResponseEntity.created(uri).body(new AlunoDTO(aluno));
+
+        AlunoDTO alunoDTO = AlunoMapper.INSTANCE.alunoToAlunoDTO(aluno);
+        return ResponseEntity.created(uri).body(alunoDTO);
     }
 
 
@@ -49,7 +52,8 @@ public class AlunoController {
         if (optional.isPresent()) {
             Aluno aluno = alunoService.update(id, form.getNome(), form.getIdade(), form.getSerie());
 
-            return ResponseEntity.ok(new AlunoDTO(aluno));
+            AlunoDTO alunoDTO = AlunoMapper.INSTANCE.alunoToAlunoDTO(aluno);
+            return ResponseEntity.ok(alunoDTO);
         }
 
         return ResponseEntity.notFound().build();
